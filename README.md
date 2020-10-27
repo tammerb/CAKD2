@@ -2,7 +2,7 @@
 ### <div align="center">Vol II: Modern Methods</div>
 
 <p align="center">
-  <img src="https://github.com/tammerb/CAKD2/blob/master/robo_arm.png">
+  <img src="https://github.com/tammerb/CAKD2/blob/main/robo_arm.png">
 </p>
 
 ### <div align="center">by Edward J. Haug</div>
