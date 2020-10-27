@@ -1,0 +1,13 @@
+x11
+x12
+x112norm=norm(x11-x12)
+x1d1 
+x1d2
+x1d12norm=norm(x1d1-x1d2)
+x1dd12norm=norm(x1dd1-x1dd2)
+x212norm=norm(x21-x22)
+x2d12norm=norm(x2d1-x2d2)
+x2dd12norm=norm(x2dd1-x2dd2)
+y12norm=norm(y1-y2)
+yd12norm=norm(yd1-yd2)
+ydd12norm=norm(ydd1-ydd2)
