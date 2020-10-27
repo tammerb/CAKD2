@@ -1,2 +1,4 @@
-## Computer-Aided Kinematics and Dynamics of Mechanical Systems
-## Vol II: Modern Methods
+## COMPUTER-AIDED KINEMATICS AND DYNAMICS
+## OF MECHANICAL SYSTEMS
+#### Vol II: Modern Methods
+
