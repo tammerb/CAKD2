@@ -1,16 +1,16 @@
 %AA_Spatial_Orientation_Transformation_Matrix_and_Inverse for p
 
-Part=[];    %Part=1, Define orthogonal tramsformation matrix 
+Part=[1];    %Part=1, Define orthogonal tramsformation matrix 
             %Part=2, Compute p for given orthogonal tramsformation matrix A
 
 
 if Part==1  %Define orthogonal tramsformation matrix
 
-mode=[];     %mode=1, enter A; mode=2, point definition of A;
+mode=[1];     %mode=1, enter A; mode=2, point definition of A;
              %mode=3, Euler'S Theorem
 
 if mode==1
-A=[,,;,,;,,];
+A=eye(3);
 end
 
 if mode==2
