@@ -1,10 +1,7 @@
 function A=AT(p)
-%Evaluate A(p) of Eq. (2.5.24), given p 
-e0=p(1);
+%eulerToA  Calculates A from euler parameters in p according to Eq 2.5.22
+%   [3*3 Orientation Matrix A] = AT(4*1 euler parameters p)
+e0=p(1);                    % split e and e0 in p
 e=[p(2);p(3);p(4)];
-I3=eye(3);
-etil=atil(e);
-A=(e0^2-e'*e)*I3+2*e*e'+2*e0*etil;
-
-
+A=(e0^2-e'*e)*eye(3)+2*e*e'+2*e0*atil(e);
 end
