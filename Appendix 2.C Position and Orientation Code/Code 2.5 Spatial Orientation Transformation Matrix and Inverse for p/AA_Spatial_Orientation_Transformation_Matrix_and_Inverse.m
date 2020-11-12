@@ -1,74 +1,65 @@
 %AA_Spatial_Orientation_Transformation_Matrix_and_Inverse for p
+%{
+Author: Edward J. Haug, Blake Hannah, Victor Honein, Michael Horton,
+Abhay Negi, Trevor Vidano
+Institution: University of California, Davis
+Location: Davis, CA 95616
+Date: October 23, 2020
+%}
+%% How to use this code:
+%{
+This script is a user command line interface for computing the spatial
+orientation transformation matrix: A and it's Euler paramterization: p.
+This script prompts the user for the proper inputs to pass into
+convertRotationMatrix(). 
 
-Part=[1];    %Part=1, Define orthogonal tramsformation matrix 
-            %Part=2, Compute p for given orthogonal tramsformation matrix A
+When prompted for input mode, mode 1 requires the user to provide A 
+(orthogonal transformation matrix); mode 2 requires the user to provide rO,
+rP, and rQ; mode 3 requires the user to provide uBar, and chi.
 
+When prompted for output mode, mode 1 prints the A matrix to the command
+window, mode 2 prints the p matrix to the command.
+%}
 
-if Part==1  %Define orthogonal tramsformation matrix
+%% User input section:
 
-mode=[1];     %mode=1, enter A; mode=2, point definition of A;
-             %mode=3, Euler'S Theorem
-
-if mode==1
-A=eye(3);
+inputMode = -1;
+inputModePrompt = 'Enter input mode (1, 2, or 3): ';
+while not(ismember(inputMode,[1,2,3]))
+    inputMode = input(inputModePrompt);
 end
 
-if mode==2
-%Define orthogonal transformation matrix A using point definition of 
-%Section 2.5.5.
-
-rO=[;;];    %Enter vector rO to origin
-rP=[;;];    %Enter vector rP to point P
-rQ=[;;];    %Enter vector rQ to point Q
-
-f=(1/norm(rP-rO))*(rP-rO);
-h=(1/norm(atil(f)*(rQ-rO)))*atil(f)*(rQ-rO);
-g=-atil(f)*h;
-
-A=[f,g,h];
-
-end 
-
-if mode==3  %Define orthogonal transformation matrix A using Euler's
-            %Theorem of Section 2.5.3.
-
-%Unit vector u about which rotation angle chi brings x-y-z frame into 
-%coincidence with x'-y'-z' frame
-
-ubar=[;;];    %Enter vector ubar about which rotation occurs, 
-               %not necessarily normalized
-               
-chi=[];    %Enter angle chi of rotation 
-
-u=(1/norm(ubar))*ubar;
-e0=cos(chi/2);
-e=sin(chi/2)*u;
-A=(e0^2-e'*e)*eye(3)+2*e*e'+e0*atil(e);
+% Prompt user based on inputMode.
+if inputMode==1         % Prompt user to provide an A matrix.
+    A = input('Enter your A matrix: ');
+    [A,p] = convertRotationMatrix('A',A);
 end
 
+if inputMode==2         % Prompt user for point definition (Section 2.5.5.)
+    firstHalfPrompt = 'Enter vector from global origin to';
+    rO = input(strcat(firstHalfPrompt,' body-fixed origin (rO): '));
+    rP = input(strcat(firstHalfPrompt," a point on x' axis (rP): ")); 
+    rQ = input(strcat(firstHalfPrompt," a point on x'-y' plane (rQ): "));
+    [A,p] = convertRotationMatrix('rO',rO,'rP',rP,'rQ',rQ);
 end
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-if Part==2  %Given orthogonal A, compute Euler parameter vector p in 
-            %Section 2.5.4 so A=A(p)
-
-[a11,a12,a13,a21,a22,a23,a31,a32,a33] = partA(A);
-
-if norm(A'-A)>0
-trA=a11+a22+a33;
-e0=0.5*sqrt(trA+1);
-e=(1/(2*sqrt(trA+1)))*[a32-a23;a13-a31;a21-a12];
-end 
-
-if norm(A'-A)==0
-e0=1;
-e=zeros(3,1);
-end
-        
-p=[e0;e];
- 
+if inputMode==3         % Prompt user for definition from Eulers Theorem of 
+                        % Section 2.5.3.
+    ubar = input("Enter unit vector u about which to rotate x-y-z (uBar): ");             
+    chi = input("Enter amount of rotation in radians (chi): ");
+    [A,p] = convertRotationMatrix('ubar',ubar,'chi',chi);
 end
 
+outputMode = -1;
+outputModePrompt = 'Enter output mode (1 or 2): ';
+while not(ismember(outputMode,[1,2]))
+    outputMode = input(outputModePrompt);
+end
+%% Print output based on user input.
+if outputMode==1  % Present A (orthogonal transformation matrix).
+    A
+end
 
-
-
+if outputMode==2  % Present p (Euler parameterization of A).
+    p
+end
